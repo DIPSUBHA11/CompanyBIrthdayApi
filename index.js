@@ -19,15 +19,7 @@ app.use(function(req, res, next) {
 app.use(express.json());
 var port = process.env.PORT || 8086;
 
-app.use(
-    cors({
-        origin: "*",
-        methods: ["PUT", "POST", "GET", "DELETE", "OPTIONS", "PATCH"],
-        allowedHeaders: [
-            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-IDENTITY",
-        ],
-    })
-);
+app.use(cors());
 
 mongoose.connect(db.url, { useNewUrlParser: true }).then(() => {
     console.log('Connection Succesful')
