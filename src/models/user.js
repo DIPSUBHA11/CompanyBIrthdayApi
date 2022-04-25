@@ -17,6 +17,15 @@ const userSchema = mongoose.Schema({
     user_image: {
         type: String,
         required: true,
+    },
+    user_date:{
+        type:Date,
+        require:true
+    },
+    is_user_active:{
+        type:Boolean,
+        require:true,
+        default:true
     }
 }, {
  collection: 'user' 
