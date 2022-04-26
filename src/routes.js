@@ -31,16 +31,40 @@ router.get(
   eventcontroller.find_date_of_join_by_date
 );
 
+router.post('/templateData', upload.single('ImageFile'), async (req, res) => {
+  const url = req.protocol + '://' + req.get('host')
+  console.log(req.file, req.body)
+  //  const response=new models.event_category({
+  //    event_category:"Birthday",
+  //    event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
+  //   })
+  try {
+    // const successful = await response.save()
+    models.event_category.update(
+      { event_category: "Birthday" },
+      {
+        $push: {
+          event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
+        }
+      }
+    )
+    // res.json(successful)
+  }
+  catch (err) {
+    res.send(err)
+  }
+});
+
 router.post('/upload', upload.single('ImageFile'), async (req, res) => {
   const url = req.protocol + '://' + req.get('host')
   const user1 = new models.user({
     user_id: req.body.id,
     user_name: req.body.name,
     user_date: req.body.birthday,
-    user_image: url+ '/public/images/'+req.file.filename,
-    is_user_active:true,
+    user_image: url + '/public/images/' + req.file.filename,
+    is_user_active: true,
     user_doj: req.body.doj,
-    client_id:req.body.clientId===" "?null:req.body.clientId
+    client_id: req.body.clientId === " " ? null : req.body.clientId
   })
   try {
     const successful = await user1.save()
@@ -49,7 +73,7 @@ router.post('/upload', upload.single('ImageFile'), async (req, res) => {
   catch (err) {
     res.send(err)
   }
-});
+})
 
 
 
