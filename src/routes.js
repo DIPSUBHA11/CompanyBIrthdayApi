@@ -32,13 +32,15 @@ router.get(
 );
 
 router.post('/upload', upload.single('ImageFile'), async (req, res) => {
-  console.log(req.body)
+  const url = req.protocol + '://' + req.get('host')
   const user1 = new models.user({
     user_id: req.body.id,
     user_name: req.body.name,
     user_date: req.body.birthday,
-    user_image: req.file.path,
-    is_user_active:true
+    user_image: url+ '/public/images/'+req.file.filename,
+    is_user_active:true,
+    user_doj: req.body.doj,
+    client_id:req.body.clientId===" "?null:req.body.clientId
   })
   try {
     const successful = await user1.save()
@@ -47,7 +49,6 @@ router.post('/upload', upload.single('ImageFile'), async (req, res) => {
   catch (err) {
     res.send(err)
   }
-
 });
 
 

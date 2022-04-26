@@ -2,13 +2,9 @@ import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema({
     user_id: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer value'
-        }
     },
     user_name: {
         type: String,
@@ -26,6 +22,14 @@ const userSchema = mongoose.Schema({
         type:Boolean,
         require:true,
         default:true
+    },
+    user_doj:{
+        type:Date,
+        require:true
+    },
+    client_id:{
+        type:Number,
+        default:null
     }
 }, {
  collection: 'user' 
