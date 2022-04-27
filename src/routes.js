@@ -48,7 +48,7 @@ router.post('/templateData', upload.single('ImageFile'), async (req, res) => {
         }
       }
     )
-    // res.json(successful)
+    res.json(successful)
   }
   catch (err) {
     res.send(err)
@@ -60,7 +60,7 @@ router.post('/upload', upload.single('ImageFile'), async (req, res) => {
   const user1 = new models.user({
     user_id: req.body.id,
     user_name: req.body.name,
-    user_date: req.body.birthday,
+    birth_date: req.body.birthday,
     user_image: url + '/public/images/' + req.file.filename,
     is_user_active: true,
     user_doj: req.body.doj,
