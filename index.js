@@ -6,7 +6,7 @@ import db from './src/config/config.js';
 import mongoose from "mongoose";
 
 let app = express();
-app.use('/gettingEvent', express.static('./public/images'));
+app.use('/public/images', express.static('./public/images'));
 dotenv.config();
 
 app.use(function(req, res, next) {
