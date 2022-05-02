@@ -4,8 +4,11 @@ import cors from "cors";
 import router from "./src/routes.js";
 import db from './src/config/config.js';
 import mongoose from "mongoose";
+// import cronjob from "./src/cron_jobs/daily_cron_job.js";
 
 let app = express();
+
+
 app.use('/public/images', express.static('./public/images'));
 dotenv.config();
 
@@ -27,5 +30,8 @@ mongoose.connect(db.url, { useNewUrlParser: true }).then(() => {
 
 app.use("/", router);
 app.listen(port, function(err) {
-    if (!err) { console.log("Running restapp project on " + port); } else console.log(err);
+    if (!err) { 
+        console.log("Running restapp project on " + port); 
+        // cronjob()
+    } else console.log(err);
 });

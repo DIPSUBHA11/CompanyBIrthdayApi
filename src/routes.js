@@ -17,19 +17,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get(
-  "/gettingEvent",
+  "/get_Today_Events",
+  eventcontroller.get_today_events
+);
+
+router.get(
+  "/get_Events_by_Date",
   eventcontroller.filter_events_by_date
 );
 
-router.get(
-  "/birthdayEvent",
-  eventcontroller.find_birthdays_by_date
-);
-
-router.get(
-  "/work-anniversary",
-  eventcontroller.find_date_of_join_by_date
-);
+// router.get(
+//   "/work-anniversary",
+//   eventcontroller.find_date_of_join_by_date
+// );
 
 router.post('/templateData', upload.single('ImageFile'), async (req, res) => {
   const url = req.protocol + '://' + req.get('host')
