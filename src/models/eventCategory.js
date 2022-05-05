@@ -7,7 +7,15 @@ const event_category_schema = mongoose.Schema({
                 type: Number,
                 required:true
             },
-            template:{
+            template_bg:{
+                type:String,
+                required:true
+            },
+            template_fg:{
+                type:String,
+                required:true
+            },
+            template_placeholder:{
                 type:String,
                 required:true
             }

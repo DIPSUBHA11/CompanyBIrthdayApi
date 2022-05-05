@@ -1,11 +1,11 @@
 import express from "express";
-import eventController from './controller/eventController.js'
+import EventController from './controller/EventController.js'
 import models from '../src/models/index.js'
 import multer from "multer";
 
 
 let router = express.Router();
-let eventcontroller = new eventController();
+let eventController = new EventController();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/images')
@@ -17,13 +17,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get(
-  "/get_Today_Events",
-  eventcontroller.get_today_events
+  "/get-today-events",
+  eventController.getTodayEvents
 );
 
 router.get(
-  "/get_Events_by_Date",
-  eventcontroller.filter_events_by_date
+  "/get-events-by-Date",
+  eventController.filterEventsByDate
 );
 
 // router.get(

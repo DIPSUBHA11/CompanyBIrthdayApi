@@ -1,15 +1,13 @@
 import models from "../models/index.js";
 import moment from "moment";
 import {
-    create_birtthday_event,
-    create_doj_date,
     events_changing
 } from "../utils/create_event_functions.js";
 
-class eventController {
+class EventController {
 
 
-    async get_today_events(request, response) {
+    async getTodayEvents(request, response) {
 
         let today_date = moment().format('D/MM/YYYY')
 
@@ -26,7 +24,7 @@ class eventController {
                 "_id": 0,
             }).populate("event_category_id", {
                 "event_category": 1,
-                "event_templates.template": 1,
+                "event_templates": 1,
                 "_id": 0
             }).populate("event_user_ids", {
                 "user_name": 1,
@@ -35,7 +33,6 @@ class eventController {
                 "_id": 0
             }).exec()
             result = events_changing(result)
-            // console.log(result)
             return response.json({
                 events: result
             })
@@ -47,7 +44,7 @@ class eventController {
 
     }
 
-    async filter_events_by_date(request, response) {
+    async filterEventsByDate(request, response) {
         console.log(moment.utc(`${request.body.date} 00:00:00.000`, "DD/MM/YYYY HH:mm:ss.SSS").toDate())
         try {
 
@@ -58,8 +55,19 @@ class eventController {
                 event_end_date: {
                     $gte: moment.utc(`${request.body.date} 23:59:59.999`, "DD/MM/YYYY HH:mm:ss.SSS").toDate()
                 }
-            }).populate("event_category_id").populate("event_user_ids").exec()
-            // console.log(result);
+            }).select({
+                "event_description": 1,
+                "_id": 0,
+            }).populate("event_category_id", {
+                "event_category": 1,
+                "event_templates": 1,
+                "_id": 0
+            }).populate("event_user_ids", {
+                "user_name": 1,
+                "user_image": 1,
+                "client_id": 1,
+                "_id": 0
+            }).exec()
             result=events_changing(result)
             return response.json({
                 events: result
@@ -132,4 +140,4 @@ class eventController {
     //     }
     // }
 }
-export default eventController;
+export default EventController;

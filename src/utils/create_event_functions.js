@@ -1,7 +1,7 @@
 import models from "../models/index.js";
 import moment from "moment";
 
-export async function create_birtthday_event(date) {
+export async function create_birthday_event(date) {
     try {
 
         let filter_date = moment.utc(`${date} 00:00:00.000`, "DD/MM/YYYY HH:mm:ss.SSS").toDate()
@@ -71,7 +71,7 @@ export async function create_birtthday_event(date) {
     }
 }
 
-export async function create_doj_date(date) {
+export async function create_doj_event(date) {
     try {
 
         let filter_date = moment.utc(`${date} 00:00:00.000`, "DD/MM/YYYY HH:mm:ss.SSS").toDate()
@@ -157,9 +157,11 @@ export function events_changing(result) {
                 return item_details;
             });
             var new_event = {
-                category: e.event_category_id.event_category,
+                category: e.event_category_id.event_category.event_templates,
                 description: e.event_description,
-                template: e.event_category_id.event_templates[0].template,
+                template_background: e.event_category_id.event_templates[0].template_bg,
+                template_foreground: e.event_category_id.event_templates[0].template_fg,
+                template_placeholder: e.event_category_id.event_templates[0].template_placeholder,
                 items: details,
             };
             return new_event;
