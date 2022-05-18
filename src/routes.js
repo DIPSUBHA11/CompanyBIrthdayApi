@@ -1,5 +1,5 @@
 import express from "express";
-import EventController from './controller/EventController.js'
+import EventController from './controller/eventController.js'
 import models from '../src/models/index.js'
 import multer from "multer";
 
