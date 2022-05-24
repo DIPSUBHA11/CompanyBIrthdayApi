@@ -26,6 +26,11 @@ router.get(
   eventController.filterEventsByDate
 );
 
+router.get(
+  "/get-event-categories",
+  eventController.getEventCategories
+)
+
 // router.get(
 //   "/work-anniversary",
 //   eventcontroller.find_date_of_join_by_date

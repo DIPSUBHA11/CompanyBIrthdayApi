@@ -78,6 +78,20 @@ class EventController {
             });
         }
     }
+
+    async getEventCategories(request,response){
+        try{
+            let results = await models.event_category.find({}).select({"_id":1,"event_category":1}).exec()
+            return response.json({
+                categories: results
+            })
+
+        } catch (e) {
+            return response.status(400).json({
+                error: e.message
+            });
+        }
+    }
     //creating+
     // async find_birthdays_by_date(request, response) {
     //     try {
