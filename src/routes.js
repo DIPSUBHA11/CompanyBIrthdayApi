@@ -36,24 +36,27 @@ router.get(
 //   eventcontroller.find_date_of_join_by_date
 // );
 
-router.post('/templateData', upload.single('ImageFile'), async (req, res) => {
+router.post('/templateData', upload.fields([{name: 'templatename', maxCount: 1}, {name: 'templatename2', maxCount: 1},{name:'templatename3',maxCount:1}]), async (req, res) => {
   const url = req.protocol + '://' + req.get('host')
-  console.log(req.file, req.body)
+  console.log(req.files.templatename[0].filename)
+  console.log(req.files.templatename2[0].filename)
+  console.log(req.files.templatename3[0].filename)
+  console.log(req.body.id)
   //  const response=new models.event_category({
   //    event_category:"Birthday",
   //    event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
   //   })
   try {
     // const successful = await response.save()
-    models.event_category.update(
-      { event_category: "Birthday" },
-      {
-        $push: {
-          event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
-        }
-      }
-    )
-    res.json(successful)
+    // models.event_category.update(
+    //   { event_category: "Birthday" },
+    //   {
+    //     $push: {
+    //       event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
+    //     }
+    //   }
+    // )
+    // res.json(successful)
   }
   catch (err) {
     res.send(err)
