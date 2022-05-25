@@ -38,10 +38,6 @@ router.get(
 
 router.post('/templateData', upload.fields([{name: 'templatename', maxCount: 1}, {name: 'templatename2', maxCount: 1},{name:'templatename3',maxCount:1}]), async (req, res) => {
   const url = req.protocol + '://' + req.get('host')
-  console.log(req.files.templatename[0].filename)
-  console.log(req.files.templatename2[0].filename)
-  console.log(req.files.templatename3[0].filename)
-  console.log(req.body.id)
   //  const response=new models.event_category({
   //    event_category:"Birthday",
   //    event_templates: { template_id: req.body.id, template: url + '/public/images/' + req.file.filename }
@@ -57,6 +53,16 @@ router.post('/templateData', upload.fields([{name: 'templatename', maxCount: 1},
     //   }
     // )
     // res.json(successful)
+    models.event_category.updateOne({_id:req.body.id},{
+      $push: {
+        event_templates: {
+          template_bg: url + '/public/images/' + req.files.templatename[0].filename ,
+          template_fg: url + '/public/images/' + req.files.templatename2[0].filename ,
+          template_placeholder: url + '/public/images/' + req.files.templatename3[0].filename
+        }
+      }
+    }).exec()
+    res.json(successful)
   }
   catch (err) {
     res.send(err)
